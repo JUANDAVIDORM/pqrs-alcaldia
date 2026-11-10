@@ -1,0 +1,399 @@
+<?xml version="1.0" ?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_ASIS" targetNamespace="http://pqrs.villaserena.example/bpmn" name="Proceso AS-IS: gestión manual de PQRS (alcaldía ficticia de Villa Serena)">
+  <bpmn:collaboration id="Collab_ASIS">
+    <bpmn:participant id="Part_Ciu" name="Ciudadano" processRef="Proc_Ciu"/>
+    <bpmn:participant id="Part_Alc" name="Alcaldía de Villa Serena" processRef="Proc_Alc"/>
+    <bpmn:messageFlow id="MF10" sourceRef="TA01" targetRef="TA05"/>
+    <bpmn:messageFlow id="MF11" sourceRef="TA02" targetRef="TA05"/>
+    <bpmn:messageFlow id="MF12" sourceRef="TA03" targetRef="TA04"/>
+    <bpmn:messageFlow id="MF28" sourceRef="TA13" targetRef="TA15"/>
+  </bpmn:collaboration>
+  <bpmn:process id="Proc_Ciu" isExecutable="false" name="Ciudadano">
+    <bpmn:startEvent id="S_c" name="Necesita presentar una PQRS"/>
+    <bpmn:exclusiveGateway id="GA01" name="GA-01 Canal"/>
+    <bpmn:userTask id="TA01" name="TA-01 Presentar PQRS por formulario web">
+      <bpmn:documentation>Formulario web</bpmn:documentation>
+    </bpmn:userTask>
+    <bpmn:userTask id="TA02" name="TA-02 Enviar PQRS por correo electrónico">
+      <bpmn:documentation>Correo electrónico</bpmn:documentation>
+    </bpmn:userTask>
+    <bpmn:manualTask id="TA03" name="TA-03 Presentar PQRS en ventanilla">
+      <bpmn:documentation>Atención presencial</bpmn:documentation>
+    </bpmn:manualTask>
+    <bpmn:exclusiveGateway id="GA01m" name=""/>
+    <bpmn:manualTask id="TA15" name="TA-15 Recibir la respuesta"/>
+    <bpmn:endEvent id="E_c" name="Respuesta recibida"/>
+    <bpmn:sequenceFlow id="SF01" sourceRef="S_c" targetRef="GA01"/>
+    <bpmn:sequenceFlow id="SF02" sourceRef="GA01" targetRef="TA01"/>
+    <bpmn:sequenceFlow id="SF03" sourceRef="GA01" targetRef="TA02"/>
+    <bpmn:sequenceFlow id="SF04" sourceRef="GA01" targetRef="TA03"/>
+    <bpmn:sequenceFlow id="SF05" sourceRef="TA01" targetRef="GA01m"/>
+    <bpmn:sequenceFlow id="SF06" sourceRef="TA02" targetRef="GA01m"/>
+    <bpmn:sequenceFlow id="SF07" sourceRef="TA03" targetRef="GA01m"/>
+    <bpmn:sequenceFlow id="SF08" sourceRef="GA01m" targetRef="TA15"/>
+    <bpmn:sequenceFlow id="SF09" sourceRef="TA15" targetRef="E_c"/>
+  </bpmn:process>
+  <bpmn:process id="Proc_Alc" isExecutable="false" name="Alcaldía de Villa Serena">
+    <bpmn:laneSet id="LaneSet_Proc_Alc">
+      <bpmn:lane id="Lane_Rad" name="Radicador">
+        <bpmn:flowNodeRef>TA05</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>TA04</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GRm</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>TA06</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>M2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>TA07</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>TA08</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>TA14</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>E_r</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Jef" name="Jefe de dependencia">
+        <bpmn:flowNodeRef>TA09</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GA02</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>TA10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>TA11</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Fun" name="Funcionario responsable">
+        <bpmn:flowNodeRef>TA12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>TA13</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:manualTask id="TA05" name="TA-05 Revisar buzón de correo y formularios recibidos">
+      <bpmn:documentation>Revisión periódica del buzón</bpmn:documentation>
+    </bpmn:manualTask>
+    <bpmn:manualTask id="TA04" name="TA-04 Recibir PQRS en ventanilla">
+      <bpmn:documentation>Papel</bpmn:documentation>
+    </bpmn:manualTask>
+    <bpmn:exclusiveGateway id="GRm" name=""/>
+    <bpmn:manualTask id="TA06" name="TA-06 Registrar PQRS en planilla y asignar radicado">
+      <bpmn:documentation>Planilla (hoja de cálculo); sin verificación de duplicados</bpmn:documentation>
+    </bpmn:manualTask>
+    <bpmn:exclusiveGateway id="M2" name=""/>
+    <bpmn:manualTask id="TA07" name="TA-07 Decidir tema y dependencia según criterio personal"/>
+    <bpmn:manualTask id="TA08" name="TA-08 Reenviar el caso a la dependencia"/>
+    <bpmn:manualTask id="TA14" name="TA-14 Actualizar planilla y cerrar el caso"/>
+    <bpmn:endEvent id="E_r" name="PQRS respondida y cerrada"/>
+    <bpmn:manualTask id="TA09" name="TA-09 Recibir el caso y revisar si le corresponde"/>
+    <bpmn:exclusiveGateway id="GA02" name="GA-02 ¿Corresponde a la dependencia?"/>
+    <bpmn:manualTask id="TA10" name="TA-10 Devolver o reenviar el caso"/>
+    <bpmn:manualTask id="TA11" name="TA-11 Asignar el caso a un funcionario"/>
+    <bpmn:manualTask id="TA12" name="TA-12 Elaborar la respuesta"/>
+    <bpmn:manualTask id="TA13" name="TA-13 Enviar la respuesta al ciudadano"/>
+    <bpmn:textAnnotation id="PD01">
+      <bpmn:text>PD-01 Tres canales sin integrar; casos perdidos</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="PD02">
+      <bpmn:text>PD-02 Sin verificación de duplicados</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="PD03">
+      <bpmn:text>PD-03 Asignación por criterio personal (mal asignados)</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="PD04">
+      <bpmn:text>PD-04 Devoluciones y reenvíos (reproceso)</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="PD05">
+      <bpmn:text>PD-05 Asignación informal, sin ver la carga</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="PD06">
+      <bpmn:text>PD-06 Sin alertas ni control de plazos</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="PD07">
+      <bpmn:text>PD-07 Planilla desactualizada; sin consulta de estado</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:sequenceFlow id="SF13" sourceRef="TA05" targetRef="GRm"/>
+    <bpmn:sequenceFlow id="SF14" sourceRef="TA04" targetRef="GRm"/>
+    <bpmn:sequenceFlow id="SF15" sourceRef="GRm" targetRef="TA06"/>
+    <bpmn:sequenceFlow id="SF16" sourceRef="TA06" targetRef="M2"/>
+    <bpmn:sequenceFlow id="SF17" sourceRef="M2" targetRef="TA07"/>
+    <bpmn:sequenceFlow id="SF18" sourceRef="TA07" targetRef="TA08"/>
+    <bpmn:sequenceFlow id="SF19" sourceRef="TA08" targetRef="TA09"/>
+    <bpmn:sequenceFlow id="SF20" sourceRef="TA09" targetRef="GA02"/>
+    <bpmn:sequenceFlow id="SF21" sourceRef="GA02" targetRef="TA11" name="Sí"/>
+    <bpmn:sequenceFlow id="SF22" sourceRef="GA02" targetRef="TA10" name="No"/>
+    <bpmn:sequenceFlow id="SF23" sourceRef="TA10" targetRef="M2"/>
+    <bpmn:sequenceFlow id="SF24" sourceRef="TA11" targetRef="TA12"/>
+    <bpmn:sequenceFlow id="SF25" sourceRef="TA12" targetRef="TA13"/>
+    <bpmn:sequenceFlow id="SF26" sourceRef="TA13" targetRef="TA14"/>
+    <bpmn:sequenceFlow id="SF27" sourceRef="TA14" targetRef="E_r"/>
+    <bpmn:association id="AS29" sourceRef="PD01" targetRef="TA05" associationDirection="None"/>
+    <bpmn:association id="AS30" sourceRef="PD02" targetRef="TA06" associationDirection="None"/>
+    <bpmn:association id="AS31" sourceRef="PD03" targetRef="TA07" associationDirection="None"/>
+    <bpmn:association id="AS32" sourceRef="PD04" targetRef="TA09" associationDirection="None"/>
+    <bpmn:association id="AS33" sourceRef="PD05" targetRef="TA11" associationDirection="None"/>
+    <bpmn:association id="AS34" sourceRef="PD06" targetRef="TA12" associationDirection="None"/>
+    <bpmn:association id="AS35" sourceRef="PD07" targetRef="TA14" associationDirection="None"/>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_ASIS">
+    <bpmndi:BPMNPlane id="Plane_ASIS" bpmnElement="Collab_ASIS">
+      <bpmndi:BPMNShape id="DI_Part_Ciu" bpmnElement="Part_Ciu" isHorizontal="true">
+        <dc:Bounds x="0" y="0" width="2260" height="300"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Part_Alc" bpmnElement="Part_Alc" isHorizontal="true">
+        <dc:Bounds x="0" y="320" width="2260" height="660"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Lane_Rad" bpmnElement="Lane_Rad" isHorizontal="true">
+        <dc:Bounds x="30" y="320" width="2230" height="240"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Lane_Jef" bpmnElement="Lane_Jef" isHorizontal="true">
+        <dc:Bounds x="30" y="560" width="2230" height="260"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Lane_Fun" bpmnElement="Lane_Fun" isHorizontal="true">
+        <dc:Bounds x="30" y="820" width="2230" height="160"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_S_c" bpmnElement="S_c">
+        <dc:Bounds x="85" y="95" width="30" height="30"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="45" y="129" width="110" height="30"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_GA01" bpmnElement="GA01" isMarkerVisible="true">
+        <dc:Bounds x="180" y="90" width="40" height="40"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="204" y="70" width="60" height="30"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_TA01" bpmnElement="TA01">
+        <dc:Bounds x="265" y="28" width="130" height="64"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_TA02" bpmnElement="TA02">
+        <dc:Bounds x="365" y="118" width="130" height="64"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_TA03" bpmnElement="TA03">
+        <dc:Bounds x="485" y="208" width="130" height="64"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_GA01m" bpmnElement="GA01m" isMarkerVisible="true">
+        <dc:Bounds x="710" y="130" width="40" height="40"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_TA15" bpmnElement="TA15">
+        <dc:Bounds x="1835" y="118" width="130" height="64"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_E_c" bpmnElement="E_c">
+        <dc:Bounds x="2035" y="135" width="30" height="30"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1995" y="169" width="110" height="30"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_TA05" bpmnElement="TA05">
+        <dc:Bounds x="305" y="348" width="130" height="64"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_TA04" bpmnElement="TA04">
+        <dc:Bounds x="485" y="458" width="130" height="64"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_GRm" bpmnElement="GRm" isMarkerVisible="true">
+        <dc:Bounds x="690" y="360" width="40" height="40"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_TA06" bpmnElement="TA06">
+        <dc:Bounds x="795" y="348" width="130" height="64"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_M2" bpmnElement="M2" isMarkerVisible="true">
+        <dc:Bounds x="980" y="360" width="40" height="40"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_TA07" bpmnElement="TA07">
+        <dc:Bounds x="1055" y="348" width="130" height="64"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_TA08" bpmnElement="TA08">
+        <dc:Bounds x="1215" y="348" width="130" height="64"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_TA14" bpmnElement="TA14">
+        <dc:Bounds x="1975" y="348" width="130" height="64"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_E_r" bpmnElement="E_r">
+        <dc:Bounds x="2165" y="365" width="30" height="30"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2125" y="399" width="110" height="30"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_TA09" bpmnElement="TA09">
+        <dc:Bounds x="1365" y="618" width="130" height="64"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_GA02" bpmnElement="GA02" isMarkerVisible="true">
+        <dc:Bounds x="1550" y="630" width="40" height="40"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1515" y="596" width="110" height="30"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_TA10" bpmnElement="TA10">
+        <dc:Bounds x="1505" y="718" width="130" height="64"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_TA11" bpmnElement="TA11">
+        <dc:Bounds x="1665" y="618" width="130" height="64"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_TA12" bpmnElement="TA12">
+        <dc:Bounds x="1665" y="868" width="130" height="64"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_TA13" bpmnElement="TA13">
+        <dc:Bounds x="1835" y="868" width="130" height="64"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_PD01" bpmnElement="PD01">
+        <dc:Bounds x="95" y="418" width="150" height="44"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_PD02" bpmnElement="PD02">
+        <dc:Bounds x="785" y="458" width="150" height="44"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_PD03" bpmnElement="PD03">
+        <dc:Bounds x="1045" y="458" width="150" height="44"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_PD04" bpmnElement="PD04">
+        <dc:Bounds x="1175" y="573" width="150" height="44"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_PD05" bpmnElement="PD05">
+        <dc:Bounds x="1655" y="566" width="150" height="44"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_PD06" bpmnElement="PD06">
+        <dc:Bounds x="1425" y="878" width="150" height="44"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_PD07" bpmnElement="PD07">
+        <dc:Bounds x="2085" y="458" width="150" height="44"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DI_SF01" bpmnElement="SF01">
+        <di:waypoint x="115" y="110"/>
+        <di:waypoint x="180" y="110"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF02" bpmnElement="SF02">
+        <di:waypoint x="200" y="90"/>
+        <di:waypoint x="200" y="60"/>
+        <di:waypoint x="265" y="60"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF03" bpmnElement="SF03">
+        <di:waypoint x="220" y="110"/>
+        <di:waypoint x="292" y="110"/>
+        <di:waypoint x="292" y="150"/>
+        <di:waypoint x="365" y="150"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF04" bpmnElement="SF04">
+        <di:waypoint x="200" y="130"/>
+        <di:waypoint x="200" y="240"/>
+        <di:waypoint x="485" y="240"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF05" bpmnElement="SF05">
+        <di:waypoint x="395" y="60"/>
+        <di:waypoint x="730" y="60"/>
+        <di:waypoint x="730" y="130"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF06" bpmnElement="SF06">
+        <di:waypoint x="495" y="150"/>
+        <di:waypoint x="710" y="150"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF07" bpmnElement="SF07">
+        <di:waypoint x="615" y="240"/>
+        <di:waypoint x="730" y="240"/>
+        <di:waypoint x="730" y="170"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF08" bpmnElement="SF08">
+        <di:waypoint x="750" y="150"/>
+        <di:waypoint x="1835" y="150"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF09" bpmnElement="SF09">
+        <di:waypoint x="1965" y="150"/>
+        <di:waypoint x="2035" y="150"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_MF10" bpmnElement="MF10">
+        <di:waypoint x="330" y="92"/>
+        <di:waypoint x="330" y="348"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_MF11" bpmnElement="MF11">
+        <di:waypoint x="430" y="182"/>
+        <di:waypoint x="430" y="348"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_MF12" bpmnElement="MF12">
+        <di:waypoint x="550" y="272"/>
+        <di:waypoint x="550" y="458"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF13" bpmnElement="SF13">
+        <di:waypoint x="435" y="380"/>
+        <di:waypoint x="690" y="380"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF14" bpmnElement="SF14">
+        <di:waypoint x="615" y="490"/>
+        <di:waypoint x="710" y="490"/>
+        <di:waypoint x="710" y="400"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF15" bpmnElement="SF15">
+        <di:waypoint x="730" y="380"/>
+        <di:waypoint x="795" y="380"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF16" bpmnElement="SF16">
+        <di:waypoint x="925" y="380"/>
+        <di:waypoint x="980" y="380"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF17" bpmnElement="SF17">
+        <di:waypoint x="1020" y="380"/>
+        <di:waypoint x="1055" y="380"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF18" bpmnElement="SF18">
+        <di:waypoint x="1185" y="380"/>
+        <di:waypoint x="1215" y="380"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF19" bpmnElement="SF19">
+        <di:waypoint x="1345" y="380"/>
+        <di:waypoint x="1430" y="380"/>
+        <di:waypoint x="1430" y="618"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF20" bpmnElement="SF20">
+        <di:waypoint x="1495" y="650"/>
+        <di:waypoint x="1550" y="650"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF21" bpmnElement="SF21">
+        <di:waypoint x="1590" y="650"/>
+        <di:waypoint x="1665" y="650"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF22" bpmnElement="SF22">
+        <di:waypoint x="1570" y="670"/>
+        <di:waypoint x="1570" y="718"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF23" bpmnElement="SF23">
+        <di:waypoint x="1505" y="750"/>
+        <di:waypoint x="1000" y="750"/>
+        <di:waypoint x="1000" y="400"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF24" bpmnElement="SF24">
+        <di:waypoint x="1730" y="682"/>
+        <di:waypoint x="1730" y="868"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF25" bpmnElement="SF25">
+        <di:waypoint x="1795" y="900"/>
+        <di:waypoint x="1835" y="900"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF26" bpmnElement="SF26">
+        <di:waypoint x="1965" y="900"/>
+        <di:waypoint x="2040" y="900"/>
+        <di:waypoint x="2040" y="412"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF27" bpmnElement="SF27">
+        <di:waypoint x="2105" y="380"/>
+        <di:waypoint x="2165" y="380"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_MF28" bpmnElement="MF28">
+        <di:waypoint x="1900" y="868"/>
+        <di:waypoint x="1900" y="182"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_AS29" bpmnElement="AS29">
+        <di:waypoint x="245" y="440"/>
+        <di:waypoint x="305" y="380"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_AS30" bpmnElement="AS30">
+        <di:waypoint x="860" y="458"/>
+        <di:waypoint x="860" y="412"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_AS31" bpmnElement="AS31">
+        <di:waypoint x="1120" y="458"/>
+        <di:waypoint x="1120" y="412"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_AS32" bpmnElement="AS32">
+        <di:waypoint x="1325" y="595"/>
+        <di:waypoint x="1365" y="650"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_AS33" bpmnElement="AS33">
+        <di:waypoint x="1730" y="610"/>
+        <di:waypoint x="1730" y="618"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_AS34" bpmnElement="AS34">
+        <di:waypoint x="1575" y="900"/>
+        <di:waypoint x="1665" y="900"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_AS35" bpmnElement="AS35">
+        <di:waypoint x="2160" y="458"/>
+        <di:waypoint x="2040" y="412"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

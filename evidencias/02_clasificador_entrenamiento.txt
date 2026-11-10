@@ -1,0 +1,8 @@
+Datos: 2400 textos (1800 entrenamiento / 600 prueba) - SINTÉTICOS
+Exactitud global:            87.2 %  (RNF-04: >= 85 %)
+Casos a revisión humana:     16.7 %  (RNF-05: <= 20 %)
+Exactitud en automáticos:    97.4 %  (RNF-04: >= 96 %)
+Exactitud en revisión:       36.0 %
+Barrido de umbral: {"0,5": {"pct_a_revision": 8.0, "exactitud_automaticos": 93.1}, "0,6": {"pct_a_revision": 12.5, "exactitud_automaticos": 95.0}, "0,7": {"pct_a_revision": 16.7, "exactitud_automaticos": 97.4}, "0,8": {"pct_a_revision": 19.7, "exactitud_automaticos": 98.5}}
+
+Guardado: modelo_pqrs.joblib, metricas.json

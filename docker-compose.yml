@@ -1,0 +1,14 @@
+services:
+  pqrs:
+    build: .
+    container_name: pqrs_app
+    ports:
+      - "8501:8501"
+    restart: unless-stopped
+    environment:
+      PQRS_DATA_DIR: /app/data
+    volumes:
+      - pqrs_data:/app/data
+
+volumes:
+  pqrs_data:

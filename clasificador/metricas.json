@@ -1,0 +1,97 @@
+{
+ "datos": {
+  "total": 2400,
+  "entrenamiento": 1800,
+  "prueba": 600,
+  "tipo": "SINTÉTICO"
+ },
+ "umbral": 0.7,
+ "exactitud_global_pct": 87.2,
+ "pct_casos_a_revision_humana": 16.7,
+ "exactitud_casos_automaticos_pct": 97.4,
+ "exactitud_casos_en_revision_pct": 36.0,
+ "barrido_umbral": {
+  "0,5": {
+   "pct_a_revision": 8.0,
+   "exactitud_automaticos": 93.1
+  },
+  "0,6": {
+   "pct_a_revision": 12.5,
+   "exactitud_automaticos": 95.0
+  },
+  "0,7": {
+   "pct_a_revision": 16.7,
+   "exactitud_automaticos": 97.4
+  },
+  "0,8": {
+   "pct_a_revision": 19.7,
+   "exactitud_automaticos": 98.5
+  }
+ },
+ "cumple_RNF04_global_ge_85": true,
+ "cumple_RNF04_auto_ge_96": true,
+ "cumple_RNF05_revision_le_20": true,
+ "reporte_por_tema": {
+  "aseo_y_residuos": {
+   "precision": 0.8356164383561644,
+   "recall": 0.8133333333333334,
+   "f1-score": 0.8243243243243243,
+   "support": 75.0
+  },
+  "atencion_servidor_publico": {
+   "precision": 0.88,
+   "recall": 0.88,
+   "f1-score": 0.88,
+   "support": 75.0
+  },
+  "educacion_y_cultura": {
+   "precision": 0.8395061728395061,
+   "recall": 0.9066666666666666,
+   "f1-score": 0.8717948717948718,
+   "support": 75.0
+  },
+  "impuestos_y_facturacion": {
+   "precision": 0.9142857142857143,
+   "recall": 0.8533333333333334,
+   "f1-score": 0.8827586206896552,
+   "support": 75.0
+  },
+  "medio_ambiente": {
+   "precision": 0.9305555555555556,
+   "recall": 0.8933333333333333,
+   "f1-score": 0.9115646258503401,
+   "support": 75.0
+  },
+  "salud": {
+   "precision": 0.8441558441558441,
+   "recall": 0.8666666666666667,
+   "f1-score": 0.8552631578947368,
+   "support": 75.0
+  },
+  "transito": {
+   "precision": 0.8481012658227848,
+   "recall": 0.8933333333333333,
+   "f1-score": 0.8701298701298701,
+   "support": 75.0
+  },
+  "vias_y_alumbrado": {
+   "precision": 0.8904109589041096,
+   "recall": 0.8666666666666667,
+   "f1-score": 0.8783783783783784,
+   "support": 75.0
+  },
+  "accuracy": 0.8716666666666667,
+  "macro avg": {
+   "precision": 0.8728289937399598,
+   "recall": 0.8716666666666666,
+   "f1-score": 0.8717767311327721,
+   "support": 600.0
+  },
+  "weighted avg": {
+   "precision": 0.8728289937399599,
+   "recall": 0.8716666666666667,
+   "f1-score": 0.8717767311327721,
+   "support": 600.0
+  }
+ }
+}

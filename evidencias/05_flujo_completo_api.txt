@@ -1,0 +1,135 @@
+1) RADICAR (alta confianza) POST /pqrs
+{
+ "radicado": "PQRS-2026-000001",
+ "estado": "ASIGNADA",
+ "fecha_limite": "2026-12-01",
+ "dependencia": "Servicios Públicos y Ambiente",
+ "funcionario": "Func. Servicios 1",
+ "clasificacion": {
+  "tema": "aseo_y_residuos",
+  "dependencia_sugerida": "Servicios Públicos y Ambiente",
+  "confianza": 0.997,
+  "revisada_por_persona": false
+ },
+ "posible_duplicado_de": null
+}
+
+2) RADICAR (baja confianza) POST /pqrs
+{
+ "radicado": "PQRS-2026-000002",
+ "estado": "EN_REVISION_HUMANA",
+ "fecha_limite": "2026-12-01",
+ "dependencia": null,
+ "funcionario": null,
+ "clasificacion": {
+  "tema": "educacion_y_cultura",
+  "dependencia_sugerida": "Educación y Cultura",
+  "confianza": 0.284,
+  "revisada_por_persona": false
+ },
+ "posible_duplicado_de": null
+}
+
+3) REVISIÓN HUMANA POST /pqrs/{rad}/revision
+{
+ "radicado": "PQRS-2026-000002",
+ "estado": "ASIGNADA",
+ "fecha_limite": "2026-12-01",
+ "dependencia": "Hacienda e Impuestos",
+ "funcionario": "Func. Hacienda 1",
+ "clasificacion": {
+  "tema": "educacion_y_cultura",
+  "dependencia_sugerida": "Educación y Cultura",
+  "confianza": 0.284,
+  "revisada_por_persona": true,
+  "dependencia_final": "Hacienda e Impuestos"
+ },
+ "posible_duplicado_de": null
+}
+
+4) DUPLICADO detectado POST /pqrs
+{
+ "radicado": "PQRS-2026-000003",
+ "estado": "POSIBLE_DUPLICADO",
+ "fecha_limite": "2026-12-01",
+ "dependencia": null,
+ "funcionario": null,
+ "clasificacion": null,
+ "posible_duplicado_de": "PQRS-2026-000001"
+}
+
+5) ALERTAS (simulando día hábil 15) POST /alertas/revisar
+{
+ "fecha": "2026-12-02",
+ "alertas_emitidas": [
+  {
+   "radicado": "PQRS-2026-000001",
+   "alerta": "70%",
+   "para": "funcionario"
+  },
+  {
+   "radicado": "PQRS-2026-000001",
+   "alerta": "90%",
+   "para": "jefe de dependencia"
+  },
+  {
+   "radicado": "PQRS-2026-000001",
+   "alerta": "100%",
+   "para": "jefe de dependencia (VENCIDO)"
+  },
+  {
+   "radicado": "PQRS-2026-000002",
+   "alerta": "70%",
+   "para": "funcionario"
+  },
+  {
+   "radicado": "PQRS-2026-000002",
+   "alerta": "90%",
+   "para": "jefe de dependencia"
+  },
+  {
+   "radicado": "PQRS-2026-000002",
+   "alerta": "100%",
+   "para": "jefe de dependencia (VENCIDO)"
+  }
+ ]
+}
+
+6) CONSULTA PÚBLICA GET /pqrs/{rad}
+{
+ "radicado": "PQRS-2026-000001",
+ "estado": "ASIGNADA",
+ "fecha_limite": "2026-12-01",
+ "historial": [
+  {
+   "fecha": "2026-11-10T00:44:56",
+   "estado": "RADICADA"
+  },
+  {
+   "fecha": "2026-11-10T00:44:56",
+   "estado": "EN_VERIFICACION"
+  },
+  {
+   "fecha": "2026-11-10T00:44:56",
+   "estado": "EN_CLASIFICACION"
+  },
+  {
+   "fecha": "2026-11-10T00:44:56",
+   "estado": "ASIGNADA"
+  },
+  {
+   "fecha": "2026-11-10T00:44:56",
+   "estado": "ASIGNADA"
+  },
+  {
+   "fecha": "2026-11-10T00:44:56",
+   "estado": "ASIGNADA"
+  },
+  {
+   "fecha": "2026-11-10T00:44:56",
+   "estado": "ASIGNADA"
+  }
+ ],
+ "respuesta": null
+}
+

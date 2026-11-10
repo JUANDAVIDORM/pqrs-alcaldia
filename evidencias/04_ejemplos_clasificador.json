@@ -1,0 +1,51 @@
+[
+ {
+  "texto": "El camión de la basura no pasa hace una semana en mi cuadra",
+  "tema": "aseo_y_residuos",
+  "dependencia": "Servicios Públicos y Ambiente",
+  "confianza": 0.997,
+  "decision": "AUTOMÁTICA"
+ },
+ {
+  "texto": "Buenos días, la calle frente a mi casa tiene un hueco enorme y la luminaria dañada",
+  "tema": "vias_y_alumbrado",
+  "dependencia": "Obras e Infraestructura",
+  "confianza": 0.982,
+  "decision": "AUTOMÁTICA"
+ },
+ {
+  "texto": "El semáforo de la avenida principal está dañado y hay trancón todos los días",
+  "tema": "transito",
+  "dependencia": "Movilidad y Tránsito",
+  "confianza": 0.994,
+  "decision": "AUTOMÁTICA"
+ },
+ {
+  "texto": "El puesto de salud no tiene medicamentos para los adultos mayores",
+  "tema": "salud",
+  "dependencia": "Salud y Bienestar Social",
+  "confianza": 0.992,
+  "decision": "AUTOMÁTICA"
+ },
+ {
+  "texto": "Me llegó la factura del predial con un valor errado y duplicado",
+  "tema": "impuestos_y_facturacion",
+  "dependencia": "Hacienda e Impuestos",
+  "confianza": 0.977,
+  "decision": "AUTOMÁTICA"
+ },
+ {
+  "texto": "necesito ayuda urgente",
+  "tema": "educacion_y_cultura",
+  "dependencia": "Educación y Cultura",
+  "confianza": 0.284,
+  "decision": "REVISIÓN HUMANA"
+ },
+ {
+  "texto": "tengo un problema con mi vecino y el ruido de la obra de la casa",
+  "tema": "impuestos_y_facturacion",
+  "dependencia": "Hacienda e Impuestos",
+  "confianza": 0.318,
+  "decision": "REVISIÓN HUMANA"
+ }
+]

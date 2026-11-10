@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+
+# Secretos y configuración local (NUNCA subir)
+.env
+.env.*
+*.key
+*.pem
+secrets.*
+
+# Node (por si se usa n8n o herramientas JS)
+node_modules/
+npm-debug.log*
+
+# Sistema / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Salidas temporales
+*.log
+
+# Base de datos local de casos (se conserva entre reinicios, no se versiona)
+backend/pqrs.db

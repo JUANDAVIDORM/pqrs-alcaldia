@@ -1,0 +1,10 @@
+OK  test_01_alta_confianza_asigna_automaticamente
+OK  test_02_baja_confianza_va_a_revision_humana
+OK  test_03_duplicado_detectado_y_vinculado
+OK  test_04_asignacion_por_menor_carga
+OK  test_05_alertas_70_90_100
+OK  test_06_responder_cierra_y_consulta_publica
+OK  test_07_reasignar_exige_motivo_y_parametros_configurables
+OK  test_08_bandeja_muestra_casos_que_requieren_decision_humana
+
+8 pruebas pasaron.

@@ -1,0 +1,57 @@
+e_media calibrada (h): 62.2
+E1 AS-IS, carga normal
+   n_mes                  598.87 ± 1.73
+   vencidas                25.75 ± 0.83
+   mal_asignadas           15.08 ± 0.15
+   duplicadas               7.93 ± 0.10
+   asig_media_h             8.55 ± 0.03
+   asig_p90_h              15.34 ± 0.08
+   ciclo_dias              11.98 ± 0.19
+   util_rad                50.53 ± 0.25
+   util_fun                79.50 ± 0.29
+   espera_rev_min           0.00 ± 0.00
+   horas_rad_mes          177.85 ± 0.88
+   horas_reproceso_mes    182.96 ± 1.58
+   revision_mes             0.00 ± 0.00
+E2 TO-BE, carga normal
+   n_mes                  599.15 ± 2.42
+   vencidas                 9.01 ± 0.12
+   mal_asignadas            3.34 ± 0.08
+   duplicadas               1.57 ± 0.06
+   asig_media_h             0.22 ± 0.00
+   asig_p90_h               0.27 ± 0.00
+   ciclo_dias               7.82 ± 0.03
+   util_rad                14.20 ± 0.09
+   util_fun                68.11 ± 0.29
+   espera_rev_min           0.12 ± 0.01
+   horas_rad_mes           49.97 ± 0.31
+   horas_reproceso_mes     39.46 ± 0.87
+   revision_mes           111.91 ± 0.97
+E3 TO-BE, pico de demanda (+50 %)
+   n_mes                  900.08 ± 3.41
+   vencidas                47.92 ± 1.16
+   mal_asignadas            3.36 ± 0.06
+   duplicadas               1.58 ± 0.03
+   asig_media_h             0.22 ± 0.00
+   asig_p90_h               0.27 ± 0.00
+   ciclo_dias              20.52 ± 0.51
+   util_rad                21.27 ± 0.13
+   util_fun                99.10 ± 0.34
+   espera_rev_min           0.27 ± 0.01
+   horas_rad_mes           74.87 ± 0.45
+   horas_reproceso_mes     59.56 ± 0.95
+   revision_mes           169.02 ± 1.92
+E4 TO-BE con IA de menor precisión
+   n_mes                  599.90 ± 2.08
+   vencidas                 9.15 ± 0.17
+   mal_asignadas            6.60 ± 0.11
+   duplicadas               1.59 ± 0.05
+   asig_media_h             0.38 ± 0.01
+   asig_p90_h               0.36 ± 0.00
+   ciclo_dias               7.89 ± 0.06
+   util_rad                16.17 ± 0.09
+   util_fun                69.93 ± 0.33
+   espera_rev_min           0.16 ± 0.01
+   horas_rad_mes           56.91 ± 0.30
+   horas_reproceso_mes     68.93 ± 1.20
+   revision_mes           197.35 ± 1.21

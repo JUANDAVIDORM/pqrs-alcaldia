@@ -1,0 +1,567 @@
+<?xml version="1.0" ?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_TOBE" targetNamespace="http://pqrs.villaserena.example/bpmn" name="Proceso TO-BE: gestión de PQRS con BPMS, IA y orquestador (alcaldía ficticia de Villa Serena)">
+  <bpmn:collaboration id="Collab_TOBE">
+    <bpmn:participant id="Part_Ciu" name="Ciudadano" processRef="Proc_Ciu"/>
+    <bpmn:participant id="Part_Alc" name="Alcaldía de Villa Serena (BPMS)" processRef="Proc_Alc"/>
+    <bpmn:messageFlow id="MF40" sourceRef="T01" targetRef="S_s"/>
+    <bpmn:messageFlow id="MF41" sourceRef="T02" targetRef="S_r"/>
+    <bpmn:messageFlow id="MF42" sourceRef="T04" targetRef="EV1"/>
+    <bpmn:messageFlow id="MF43" sourceRef="T12" targetRef="EV2"/>
+    <bpmn:messageFlow id="MF44" sourceRef="T17" targetRef="T18"/>
+    <bpmn:messageFlow id="MF45" sourceRef="T18" targetRef="EV3"/>
+  </bpmn:collaboration>
+  <bpmn:process id="Proc_Ciu" isExecutable="false" name="Ciudadano">
+    <bpmn:startEvent id="S_c" name="Necesita presentar una PQRS"/>
+    <bpmn:exclusiveGateway id="GC1" name="Canal"/>
+    <bpmn:userTask id="T01" name="T-01 Radicar PQRS por formulario web"/>
+    <bpmn:manualTask id="T02" name="T-02 Enviar PQRS por correo o acudir a ventanilla"/>
+    <bpmn:exclusiveGateway id="GC2" name=""/>
+    <bpmn:intermediateCatchEvent id="EV1" name="Recibe número de radicado">
+      <bpmn:messageEventDefinition/>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:intermediateCatchEvent id="EV2" name="Recibe la respuesta">
+      <bpmn:messageEventDefinition/>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:endEvent id="E_c" name="PQRS respondida"/>
+    <bpmn:startEvent id="S_c2" name="Quiere conocer el estado"/>
+    <bpmn:userTask id="T17" name="T-17 Consultar estado con el número de radicado"/>
+    <bpmn:intermediateCatchEvent id="EV3" name="Recibe el estado">
+      <bpmn:messageEventDefinition/>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:endEvent id="E_c2" name=""/>
+    <bpmn:sequenceFlow id="SF01" sourceRef="S_c" targetRef="GC1"/>
+    <bpmn:sequenceFlow id="SF02" sourceRef="GC1" targetRef="T01"/>
+    <bpmn:sequenceFlow id="SF03" sourceRef="GC1" targetRef="T02"/>
+    <bpmn:sequenceFlow id="SF04" sourceRef="T01" targetRef="GC2"/>
+    <bpmn:sequenceFlow id="SF05" sourceRef="T02" targetRef="GC2"/>
+    <bpmn:sequenceFlow id="SF06" sourceRef="GC2" targetRef="EV1"/>
+    <bpmn:sequenceFlow id="SF07" sourceRef="EV1" targetRef="EV2"/>
+    <bpmn:sequenceFlow id="SF08" sourceRef="EV2" targetRef="E_c"/>
+    <bpmn:sequenceFlow id="SF09" sourceRef="S_c2" targetRef="T17"/>
+    <bpmn:sequenceFlow id="SF10" sourceRef="T17" targetRef="EV3"/>
+    <bpmn:sequenceFlow id="SF11" sourceRef="EV3" targetRef="E_c2"/>
+  </bpmn:process>
+  <bpmn:process id="Proc_Alc" isExecutable="false" name="Alcaldía de Villa Serena (BPMS)">
+    <bpmn:laneSet id="LaneSet_Proc_Alc">
+      <bpmn:lane id="L_Rad" name="Radicador">
+        <bpmn:flowNodeRef>S_r</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T03</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T06</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GD2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T09</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="L_Bpm" name="BPMS: flujo (orquestador e IA)">
+        <bpmn:flowNodeRef>S_s</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GJ</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T04</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T05</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GD1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T07</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>E_d</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GM2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T08</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GC</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GM3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>E_t</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T18</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="L_Fun" name="Funcionario responsable">
+        <bpmn:flowNodeRef>T11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>B70</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>B90</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>B100</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="L_Pla" name="BPMS: control de plazos">
+        <bpmn:flowNodeRef>T13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>E_a</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T14</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T16</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>E_v</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="L_Jef" name="Jefe de dependencia">
+        <bpmn:flowNodeRef>T15</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>E_j</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="S_r" name="PQRS recibida por correo o ventanilla">
+      <bpmn:messageEventDefinition/>
+    </bpmn:startEvent>
+    <bpmn:userTask id="T03" name="T-03 Registrar PQRS en el sistema"/>
+    <bpmn:userTask id="T06" name="T-06 Confirmar o descartar posible duplicado"/>
+    <bpmn:exclusiveGateway id="GD2" name="¿Es duplicado?"/>
+    <bpmn:userTask id="T09" name="T-09 Revisar y confirmar la clasificación"/>
+    <bpmn:startEvent id="S_s" name="PQRS web recibida">
+      <bpmn:messageEventDefinition/>
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="GJ" name=""/>
+    <bpmn:serviceTask id="T04" name="T-04 Generar radicado y notificar al ciudadano"/>
+    <bpmn:serviceTask id="T05" name="T-05 Verificar posibles duplicados (orquestador)"/>
+    <bpmn:exclusiveGateway id="GD1" name="¿Posible duplicado?"/>
+    <bpmn:serviceTask id="T07" name="T-07 Vincular al caso original y notificar"/>
+    <bpmn:endEvent id="E_d" name="Caso vinculado al original"/>
+    <bpmn:exclusiveGateway id="GM2" name=""/>
+    <bpmn:serviceTask id="T08" name="T-08 Clasificar tema y sugerir dependencia (IA)"/>
+    <bpmn:exclusiveGateway id="GC" name="¿Confianza ≥ 0,70?"/>
+    <bpmn:exclusiveGateway id="GM3" name=""/>
+    <bpmn:serviceTask id="T10" name="T-10 Asignar al funcionario y notificarlo"/>
+    <bpmn:serviceTask id="T12" name="T-12 Cerrar el caso y notificar al ciudadano"/>
+    <bpmn:endEvent id="E_t" name="PQRS cerrada"/>
+    <bpmn:serviceTask id="T18" name="T-18 Mostrar estado e historial del caso"/>
+    <bpmn:userTask id="T11" name="T-11 Elaborar y enviar la respuesta"/>
+    <bpmn:boundaryEvent id="B70" name="70 % del plazo" attachedToRef="T11" cancelActivity="false">
+      <bpmn:documentation>Temporizador no interruptor al 70 % del plazo (10,5 días hábiles; supuestos S-05 y S-06)</bpmn:documentation>
+      <bpmn:timerEventDefinition>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">P10DT12H</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:boundaryEvent id="B90" name="90 % del plazo" attachedToRef="T11" cancelActivity="false">
+      <bpmn:documentation>Temporizador no interruptor al 90 % del plazo (13,5 días hábiles)</bpmn:documentation>
+      <bpmn:timerEventDefinition>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">P13DT12H</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:boundaryEvent id="B100" name="100 % del plazo" attachedToRef="T11" cancelActivity="false">
+      <bpmn:documentation>Temporizador no interruptor al vencimiento (15 días hábiles)</bpmn:documentation>
+      <bpmn:timerEventDefinition>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">P15D</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:serviceTask id="T13" name="T-13 Alertar al funcionario (70 % del plazo)"/>
+    <bpmn:endEvent id="E_a" name="Alerta enviada"/>
+    <bpmn:serviceTask id="T14" name="T-14 Escalar alerta al jefe (90 % del plazo)"/>
+    <bpmn:serviceTask id="T16" name="T-16 Marcar vencido y notificar al jefe (100 %)"/>
+    <bpmn:endEvent id="E_v" name="Caso vencido registrado"/>
+    <bpmn:userTask id="T15" name="T-15 Priorizar o reasignar el caso"/>
+    <bpmn:endEvent id="E_j" name="Acción del jefe registrada"/>
+    <bpmn:sequenceFlow id="SF12" sourceRef="S_r" targetRef="T03"/>
+    <bpmn:sequenceFlow id="SF13" sourceRef="T03" targetRef="GJ"/>
+    <bpmn:sequenceFlow id="SF14" sourceRef="S_s" targetRef="GJ"/>
+    <bpmn:sequenceFlow id="SF15" sourceRef="GJ" targetRef="T04"/>
+    <bpmn:sequenceFlow id="SF16" sourceRef="T04" targetRef="T05"/>
+    <bpmn:sequenceFlow id="SF17" sourceRef="T05" targetRef="GD1"/>
+    <bpmn:sequenceFlow id="SF18" sourceRef="GD1" targetRef="T06" name="Sí"/>
+    <bpmn:sequenceFlow id="SF19" sourceRef="T06" targetRef="GD2"/>
+    <bpmn:sequenceFlow id="SF20" sourceRef="GD2" targetRef="T07" name="Sí"/>
+    <bpmn:sequenceFlow id="SF21" sourceRef="T07" targetRef="E_d"/>
+    <bpmn:sequenceFlow id="SF22" sourceRef="GD2" targetRef="GM2" name="No"/>
+    <bpmn:sequenceFlow id="SF23" sourceRef="GD1" targetRef="GM2" name="No"/>
+    <bpmn:sequenceFlow id="SF24" sourceRef="GM2" targetRef="T08"/>
+    <bpmn:sequenceFlow id="SF25" sourceRef="T08" targetRef="GC"/>
+    <bpmn:sequenceFlow id="SF26" sourceRef="GC" targetRef="GM3" name="Sí"/>
+    <bpmn:sequenceFlow id="SF27" sourceRef="GC" targetRef="T09" name="No"/>
+    <bpmn:sequenceFlow id="SF28" sourceRef="T09" targetRef="GM3"/>
+    <bpmn:sequenceFlow id="SF29" sourceRef="GM3" targetRef="T10"/>
+    <bpmn:sequenceFlow id="SF30" sourceRef="T10" targetRef="T11"/>
+    <bpmn:sequenceFlow id="SF31" sourceRef="T11" targetRef="T12"/>
+    <bpmn:sequenceFlow id="SF32" sourceRef="T12" targetRef="E_t"/>
+    <bpmn:sequenceFlow id="SF33" sourceRef="B70" targetRef="T13"/>
+    <bpmn:sequenceFlow id="SF34" sourceRef="B90" targetRef="T14"/>
+    <bpmn:sequenceFlow id="SF35" sourceRef="B100" targetRef="T16"/>
+    <bpmn:sequenceFlow id="SF36" sourceRef="T13" targetRef="E_a"/>
+    <bpmn:sequenceFlow id="SF37" sourceRef="T14" targetRef="T15"/>
+    <bpmn:sequenceFlow id="SF38" sourceRef="T15" targetRef="E_j"/>
+    <bpmn:sequenceFlow id="SF39" sourceRef="T16" targetRef="E_v"/>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_TOBE">
+    <bpmndi:BPMNPlane id="Plane_TOBE" bpmnElement="Collab_TOBE">
+      <bpmndi:BPMNShape id="DI_Part_Ciu" bpmnElement="Part_Ciu" isHorizontal="true">
+        <dc:Bounds x="0" y="0" width="2860" height="340"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Part_Alc" bpmnElement="Part_Alc" isHorizontal="true">
+        <dc:Bounds x="0" y="360" width="2860" height="840"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_L_Rad" bpmnElement="L_Rad" isHorizontal="true">
+        <dc:Bounds x="30" y="360" width="2830" height="180"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_L_Bpm" bpmnElement="L_Bpm" isHorizontal="true">
+        <dc:Bounds x="30" y="540" width="2830" height="240"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_L_Fun" bpmnElement="L_Fun" isHorizontal="true">
+        <dc:Bounds x="30" y="780" width="2830" height="140"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_L_Pla" bpmnElement="L_Pla" isHorizontal="true">
+        <dc:Bounds x="30" y="920" width="2830" height="140"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_L_Jef" bpmnElement="L_Jef" isHorizontal="true">
+        <dc:Bounds x="30" y="1060" width="2830" height="140"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_S_c" bpmnElement="S_c">
+        <dc:Bounds x="75" y="95" width="30" height="30"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="35" y="129" width="110" height="30"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_GC1" bpmnElement="GC1" isMarkerVisible="true">
+        <dc:Bounds x="170" y="90" width="40" height="40"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="194" y="70" width="60" height="30"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_T01" bpmnElement="T01">
+        <dc:Bounds x="275" y="38" width="130" height="64"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_T02" bpmnElement="T02">
+        <dc:Bounds x="435" y="118" width="130" height="64"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_GC2" bpmnElement="GC2" isMarkerVisible="true">
+        <dc:Bounds x="670" y="90" width="40" height="40"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_EV1" bpmnElement="EV1">
+        <dc:Bounds x="775" y="95" width="30" height="30"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="735" y="61" width="110" height="30"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_EV2" bpmnElement="EV2">
+        <dc:Bounds x="2575" y="95" width="30" height="30"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2535" y="61" width="110" height="30"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_E_c" bpmnElement="E_c">
+        <dc:Bounds x="2705" y="95" width="30" height="30"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2665" y="129" width="110" height="30"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_S_c2" bpmnElement="S_c2">
+        <dc:Bounds x="75" y="250" width="30" height="30"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="35" y="284" width="110" height="30"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_T17" bpmnElement="T17">
+        <dc:Bounds x="165" y="233" width="130" height="64"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_EV3" bpmnElement="EV3">
+        <dc:Bounds x="370" y="250" width="30" height="30"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="330" y="216" width="110" height="30"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_E_c2" bpmnElement="E_c2">
+        <dc:Bounds x="435" y="250" width="30" height="30"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_S_r" bpmnElement="S_r">
+        <dc:Bounds x="485" y="435" width="30" height="30"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="445" y="469" width="110" height="30"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_T03" bpmnElement="T03">
+        <dc:Bounds x="575" y="418" width="130" height="64"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_T06" bpmnElement="T06">
+        <dc:Bounds x="1155" y="418" width="130" height="64"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_GD2" bpmnElement="GD2" isMarkerVisible="true">
+        <dc:Bounds x="1340" y="430" width="40" height="40"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1305" y="396" width="110" height="30"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_T09" bpmnElement="T09">
+        <dc:Bounds x="1895" y="418" width="130" height="64"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_S_s" bpmnElement="S_s">
+        <dc:Bounds x="325" y="595" width="30" height="30"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="285" y="629" width="110" height="30"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_GJ" bpmnElement="GJ" isMarkerVisible="true">
+        <dc:Bounds x="620" y="590" width="40" height="40"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_T04" bpmnElement="T04">
+        <dc:Bounds x="725" y="578" width="130" height="64"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_T05" bpmnElement="T05">
+        <dc:Bounds x="885" y="578" width="130" height="64"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_GD1" bpmnElement="GD1" isMarkerVisible="true">
+        <dc:Bounds x="1070" y="590" width="40" height="40"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1035" y="634" width="110" height="30"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_T07" bpmnElement="T07">
+        <dc:Bounds x="1295" y="678" width="130" height="64"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_E_d" bpmnElement="E_d">
+        <dc:Bounds x="1505" y="695" width="30" height="30"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1465" y="729" width="110" height="30"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_GM2" bpmnElement="GM2" isMarkerVisible="true">
+        <dc:Bounds x="1510" y="590" width="40" height="40"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_T08" bpmnElement="T08">
+        <dc:Bounds x="1605" y="578" width="130" height="64"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_GC" bpmnElement="GC" isMarkerVisible="true">
+        <dc:Bounds x="1800" y="590" width="40" height="40"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1765" y="634" width="110" height="30"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_GM3" bpmnElement="GM3" isMarkerVisible="true">
+        <dc:Bounds x="2090" y="590" width="40" height="40"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_T10" bpmnElement="T10">
+        <dc:Bounds x="2185" y="578" width="130" height="64"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_T12" bpmnElement="T12">
+        <dc:Bounds x="2525" y="578" width="130" height="64"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_E_t" bpmnElement="E_t">
+        <dc:Bounds x="2725" y="595" width="30" height="30"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2685" y="629" width="110" height="30"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_T18" bpmnElement="T18">
+        <dc:Bounds x="165" y="678" width="130" height="64"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_T11" bpmnElement="T11">
+        <dc:Bounds x="2355" y="818" width="130" height="64"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_B70" bpmnElement="B70">
+        <dc:Bounds x="2361" y="868" width="28" height="28"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_B90" bpmnElement="B90">
+        <dc:Bounds x="2406" y="868" width="28" height="28"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_B100" bpmnElement="B100">
+        <dc:Bounds x="2451" y="868" width="28" height="28"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_T13" bpmnElement="T13">
+        <dc:Bounds x="2115" y="958" width="130" height="64"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_E_a" bpmnElement="E_a">
+        <dc:Bounds x="2285" y="975" width="30" height="30"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2245" y="1009" width="110" height="30"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_T14" bpmnElement="T14">
+        <dc:Bounds x="2355" y="958" width="130" height="64"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_T16" bpmnElement="T16">
+        <dc:Bounds x="2595" y="958" width="130" height="64"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_E_v" bpmnElement="E_v">
+        <dc:Bounds x="2785" y="975" width="30" height="30"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2745" y="1009" width="110" height="30"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_T15" bpmnElement="T15">
+        <dc:Bounds x="2355" y="1098" width="130" height="64"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_E_j" bpmnElement="E_j">
+        <dc:Bounds x="2545" y="1115" width="30" height="30"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2505" y="1149" width="110" height="30"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DI_SF01" bpmnElement="SF01">
+        <di:waypoint x="105" y="110"/>
+        <di:waypoint x="170" y="110"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF02" bpmnElement="SF02">
+        <di:waypoint x="190" y="90"/>
+        <di:waypoint x="190" y="70"/>
+        <di:waypoint x="275" y="70"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF03" bpmnElement="SF03">
+        <di:waypoint x="190" y="130"/>
+        <di:waypoint x="190" y="150"/>
+        <di:waypoint x="435" y="150"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF04" bpmnElement="SF04">
+        <di:waypoint x="405" y="70"/>
+        <di:waypoint x="690" y="70"/>
+        <di:waypoint x="690" y="90"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF05" bpmnElement="SF05">
+        <di:waypoint x="565" y="150"/>
+        <di:waypoint x="690" y="150"/>
+        <di:waypoint x="690" y="130"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF06" bpmnElement="SF06">
+        <di:waypoint x="710" y="110"/>
+        <di:waypoint x="775" y="110"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF07" bpmnElement="SF07">
+        <di:waypoint x="805" y="110"/>
+        <di:waypoint x="2575" y="110"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF08" bpmnElement="SF08">
+        <di:waypoint x="2605" y="110"/>
+        <di:waypoint x="2705" y="110"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF09" bpmnElement="SF09">
+        <di:waypoint x="105" y="265"/>
+        <di:waypoint x="165" y="265"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF10" bpmnElement="SF10">
+        <di:waypoint x="295" y="265"/>
+        <di:waypoint x="370" y="265"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF11" bpmnElement="SF11">
+        <di:waypoint x="400" y="265"/>
+        <di:waypoint x="435" y="265"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF12" bpmnElement="SF12">
+        <di:waypoint x="515" y="450"/>
+        <di:waypoint x="575" y="450"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF13" bpmnElement="SF13">
+        <di:waypoint x="640" y="482"/>
+        <di:waypoint x="640" y="590"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF14" bpmnElement="SF14">
+        <di:waypoint x="355" y="610"/>
+        <di:waypoint x="620" y="610"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF15" bpmnElement="SF15">
+        <di:waypoint x="660" y="610"/>
+        <di:waypoint x="725" y="610"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF16" bpmnElement="SF16">
+        <di:waypoint x="855" y="610"/>
+        <di:waypoint x="885" y="610"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF17" bpmnElement="SF17">
+        <di:waypoint x="1015" y="610"/>
+        <di:waypoint x="1070" y="610"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF18" bpmnElement="SF18">
+        <di:waypoint x="1090" y="590"/>
+        <di:waypoint x="1090" y="450"/>
+        <di:waypoint x="1155" y="450"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF19" bpmnElement="SF19">
+        <di:waypoint x="1285" y="450"/>
+        <di:waypoint x="1340" y="450"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF20" bpmnElement="SF20">
+        <di:waypoint x="1360" y="470"/>
+        <di:waypoint x="1360" y="678"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF21" bpmnElement="SF21">
+        <di:waypoint x="1425" y="710"/>
+        <di:waypoint x="1505" y="710"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF22" bpmnElement="SF22">
+        <di:waypoint x="1380" y="450"/>
+        <di:waypoint x="1530" y="450"/>
+        <di:waypoint x="1530" y="590"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF23" bpmnElement="SF23">
+        <di:waypoint x="1110" y="610"/>
+        <di:waypoint x="1510" y="610"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF24" bpmnElement="SF24">
+        <di:waypoint x="1550" y="610"/>
+        <di:waypoint x="1605" y="610"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF25" bpmnElement="SF25">
+        <di:waypoint x="1735" y="610"/>
+        <di:waypoint x="1800" y="610"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF26" bpmnElement="SF26">
+        <di:waypoint x="1840" y="610"/>
+        <di:waypoint x="2090" y="610"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF27" bpmnElement="SF27">
+        <di:waypoint x="1820" y="590"/>
+        <di:waypoint x="1820" y="450"/>
+        <di:waypoint x="1895" y="450"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF28" bpmnElement="SF28">
+        <di:waypoint x="2025" y="450"/>
+        <di:waypoint x="2110" y="450"/>
+        <di:waypoint x="2110" y="590"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF29" bpmnElement="SF29">
+        <di:waypoint x="2130" y="610"/>
+        <di:waypoint x="2185" y="610"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF30" bpmnElement="SF30">
+        <di:waypoint x="2250" y="642"/>
+        <di:waypoint x="2250" y="850"/>
+        <di:waypoint x="2355" y="850"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF31" bpmnElement="SF31">
+        <di:waypoint x="2485" y="850"/>
+        <di:waypoint x="2590" y="850"/>
+        <di:waypoint x="2590" y="642"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF32" bpmnElement="SF32">
+        <di:waypoint x="2655" y="610"/>
+        <di:waypoint x="2725" y="610"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF33" bpmnElement="SF33">
+        <di:waypoint x="2375" y="896"/>
+        <di:waypoint x="2375" y="927"/>
+        <di:waypoint x="2180" y="927"/>
+        <di:waypoint x="2180" y="958"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF34" bpmnElement="SF34">
+        <di:waypoint x="2420" y="896"/>
+        <di:waypoint x="2420" y="958"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF35" bpmnElement="SF35">
+        <di:waypoint x="2465" y="896"/>
+        <di:waypoint x="2465" y="927"/>
+        <di:waypoint x="2660" y="927"/>
+        <di:waypoint x="2660" y="958"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF36" bpmnElement="SF36">
+        <di:waypoint x="2245" y="990"/>
+        <di:waypoint x="2285" y="990"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF37" bpmnElement="SF37">
+        <di:waypoint x="2420" y="1022"/>
+        <di:waypoint x="2420" y="1098"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF38" bpmnElement="SF38">
+        <di:waypoint x="2485" y="1130"/>
+        <di:waypoint x="2545" y="1130"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_SF39" bpmnElement="SF39">
+        <di:waypoint x="2725" y="990"/>
+        <di:waypoint x="2785" y="990"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_MF40" bpmnElement="MF40">
+        <di:waypoint x="340" y="102"/>
+        <di:waypoint x="340" y="595"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_MF41" bpmnElement="MF41">
+        <di:waypoint x="500" y="182"/>
+        <di:waypoint x="500" y="435"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_MF42" bpmnElement="MF42">
+        <di:waypoint x="790" y="578"/>
+        <di:waypoint x="790" y="125"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_MF43" bpmnElement="MF43">
+        <di:waypoint x="2590" y="578"/>
+        <di:waypoint x="2590" y="125"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_MF44" bpmnElement="MF44">
+        <di:waypoint x="230" y="297"/>
+        <di:waypoint x="230" y="678"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_MF45" bpmnElement="MF45">
+        <di:waypoint x="295" y="710"/>
+        <di:waypoint x="385" y="710"/>
+        <di:waypoint x="385" y="280"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

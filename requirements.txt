@@ -1,0 +1,11 @@
+fastapi==0.162.2
+uvicorn==0.54.0
+pydantic==2.14.3
+scikit-learn==1.9.1
+joblib==1.6.0
+pandas==3.0.6
+simpy==4.1.2
+httpx==0.28.1
+streamlit==1.67.0
+requests==2.34.2
+pytest==8.3.5
